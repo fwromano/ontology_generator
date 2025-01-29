@@ -263,6 +263,58 @@ def combine_json_into_ttl(merged_data: Dict) -> str:
     ttl_output = response.choices[0].message.content.strip()
     return ttl_output
 
+def onepassllm(document_text):
+    
+    prompt = f"""
+    Instruction:
+
+    Please read and analyze the following document that explains an OWL ontology. Your task is to convert the ontology's structure and components into a valid, coherent OWL/Turtle ontology .ttl file.
+    Include classes, relationships as OWL object properties, etc.
+      The .ttl file should comprehensively capture the ontology's classes, properties (both object and data properties), individuals, and their interrelationships. 
+      Ensure that hierarchical relationships, property domains and ranges, and any annotations or descriptions are accurately represented.
+
+    **Requirements:**
+
+    1. **Classes:**
+        - **Name:** The name of the class.
+        - **Description:** A brief description or definition of the class.
+        - **Superclasses:** List of parent classes (if any).
+        - **Subclasses:** List of child classes (if any).
+        - **Properties:** Properties associated with the class.
+
+    2. **Properties:**
+        - **Type:** Specify whether it's an "Object Property" or "Data Property."
+        - **Domain:** The class to which the property belongs.
+        - **Range:** The class or datatype that the property points to.
+        - **Description:** A brief description of the property's purpose.
+        - **Restrictions:** Any cardinality or value restrictions applied to the property.
+
+    3. **Individuals:**
+        - **Name:** The name of the individual.
+        - **Class Membership:** The class or classes the individual belongs to.
+        - **Property Values:** Key-value pairs representing property assignments.
+
+    4. **Annotations:**
+        - **Label:** Human-readable labels for classes, properties, or individuals.
+        - **Comments:** Additional comments or notes providing more context.
+
+
+    Document chunk:{document_text}
+    """
+
+    # having issue with this line. 
+    #   prompt issue? 
+    response = client.chat.completions.create(
+        model="gpt-4o-mini-2024-07-18",
+        messages=[
+            {"role": "system", "content": "You are an expert in domain knowledge extraction."},
+            {"role": "user", "content": prompt},
+        ],
+        stream=False
+    )
+    print(response)
+
+
 
 #########################################
 #   The Two-Stage Main Function
@@ -276,37 +328,39 @@ def generate_ontology_for_document(document_text: str, output_ttl="final_ontolog
     os.makedirs(PARTIALS_DIR, exist_ok=True)
     os.makedirs(os.path.dirname(output_ttl), exist_ok=True)
 
-    # --(1) Split doc--
-    chunks = chunk_text(document_text)
+    # # --(1) Split doc--
+    # chunks = chunk_text(document_text)
 
-    # --(2) Extract partial JSON per chunk--
-    partial_ontologies = []
-    for i, c in enumerate(chunks, start=1):
-        print(f"[INFO] Processing chunk {i}/{len(chunks)} (length={len(c)} chars)")
-        partial = extract_partial_json(c)
+    # # --(2) Extract partial JSON per chunk--
+    # partial_ontologies = []
+    # for i, c in enumerate(chunks, start=1):
+    #     print(f"[INFO] Processing chunk {i}/{len(chunks)} (length={len(c)} chars)")
+    #     partial = extract_partial_json(c)
         
-        # Save partial JSON to file
-        partial_path = os.path.join(PARTIALS_DIR, f"partial_{i}.json")
-        with open(partial_path, "w") as f:
-            json.dump(partial, f, indent=2)
-        print(f"Saved partial ontology to {partial_path}")
+    #     # Save partial JSON to file
+    #     partial_path = os.path.join(PARTIALS_DIR, f"partial_{i}.json")
+    #     with open(partial_path, "w") as f:
+    #         json.dump(partial, f, indent=2)
+    #     print(f"Saved partial ontology to {partial_path}")
         
-        partial_ontologies.append(partial)
+    #     partial_ontologies.append(partial)
 
-    # --(3) Merge partial JSONs--
-    merged_data = merge_partial_json(partial_ontologies)
+    # # --(3) Merge partial JSONs--
+    # merged_data = merge_partial_json(partial_ontologies)
     
-    # Save merged JSON
-    with open(MERGED_PATH, "w") as f:
-        json.dump(merged_data, f, indent=2)
-    print(f"Saved merged JSON to {MERGED_PATH}")
+    # # Save merged JSON
+    # with open(MERGED_PATH, "w") as f:
+    #     json.dump(merged_data, f, indent=2)
+    # print(f"Saved merged JSON to {MERGED_PATH}")
 
-    print("[INFO] Merged partial JSON. Entities:", len(merged_data["entities"]), 
-          "Relationships:", len(merged_data["relationships"]))
+    # print("[INFO] Merged partial JSON. Entities:", len(merged_data["entities"]), 
+    #       "Relationships:", len(merged_data["relationships"]))
 
-    # --(4) Final LLM call to produce TTL--
-    final_ttl = combine_json_into_ttl(merged_data)
+    # # --(4) Final LLM call to produce TTL--
+    # final_ttl = combine_json_into_ttl(merged_data)
 
+
+    final_ttl = onepassllm(document_text)
     # Clean or validate if you have a function for TTL
     final_ttl = clean_and_validate_ttl(final_ttl)
 

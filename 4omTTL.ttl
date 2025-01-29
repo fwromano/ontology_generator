@@ -1,0 +1,171 @@
+@prefix : <http://www.example.org/ontology#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+# Ontology declaration
+owl:Ontology a owl:Ontology;
+    rdfs:label "Ground Vehicles Categorization Ontology";
+    rdfs:comment "An ontology to categorize ground vehicles based on mobility parameters.".
+
+# Classes
+:GroundVehicle a owl:Class;
+    rdfs:label "Ground Vehicle";
+    rdfs:comment "A class representing various types of ground vehicles.".
+
+:TrackedVehicle a owl:Class;
+    rdfs:label "Tracked Vehicle";
+    rdfs:comment "A class representing vehicles that move on tracks.".
+:TrackedVehicle rdfs:subClassOf :GroundVehicle.
+
+:WheeledVehicle a owl:Class;
+    rdfs:label "Wheeled Vehicle";
+    rdfs:comment "A class representing vehicles that move on wheels.".
+:WheeledVehicle rdfs:subClassOf :GroundVehicle.
+
+:AmphibiousCombatVehicle a owl:Class;
+    rdfs:label "Amphibious Combat Vehicle";
+    rdfs:comment "A class representing military vehicles capable of operating on land and water.".
+    
+:AllTerrainVehicle a owl:Class;
+    rdfs:label "All Terrain Vehicle";
+    rdfs:comment "A class representing small vehicles designed for varied terrains.".
+
+:VehicleBin a owl:Class;
+    rdfs:label "Vehicle Bin";
+    rdfs:comment "A class representing categories of vehicles based on mobility.".
+
+# Object Properties
+:hasBin a owl:ObjectProperty;
+    rdfs:domain :GroundVehicle;
+    rdfs:range :VehicleBin;
+    rdfs:label "has bin";
+    rdfs:comment "Links vehicles to their respective bins for categorization.".
+
+:representedBy a owl:ObjectProperty;
+    rdfs:domain :VehicleBin;
+    rdfs:range :GroundVehicle;
+    rdfs:label "represented by";
+    rdfs:comment "Associates a bin with the representative vehicle.".
+
+# Data Properties
+:hasCombatWeight a owl:DatatypeProperty;
+    rdfs:domain :GroundVehicle;
+    rdfs:range xsd:decimal;
+    rdfs:label "has combat weight";
+    rdfs:comment "The weight of the vehicle in kilograms.".
+
+:hasMaxRoadSpeed a owl:DatatypeProperty;
+    rdfs:domain :GroundVehicle;
+    rdfs:range xsd:decimal;
+    rdfs:label "has maximum road speed";
+    rdfs:comment "The maximum speed of the vehicle in kilometers per hour.".
+
+:hasPowerToWeightRatio a owl:DatatypeProperty;
+    rdfs:domain :GroundVehicle;
+    rdfs:range xsd:decimal;
+    rdfs:label "has power-to-weight ratio";
+    rdfs:comment "The power-to-weight ratio of the vehicle.".
+
+# Individuals
+:HighMobilityTrackedVehicle a :VehicleBin;
+    rdfs:label "High Mobility Tracked Vehicle";
+    rdfs:comment "Vehicles with high mobility capabilities on tracks.".
+
+:MediumMobilityTrackedVehicle a :VehicleBin;
+    rdfs:label "Medium Mobility Tracked Vehicle";
+    rdfs:comment "Vehicles with medium mobility capabilities on tracks.".
+
+:LowMobilityTrackedVehicle a :VehicleBin;
+    rdfs:label "Low Mobility Tracked Vehicle";
+    rdfs:comment "Vehicles with low mobility capabilities on tracks.".
+
+:HighMobilityWheeledVehicle a :VehicleBin;
+    rdfs:label "High Mobility Wheeled Vehicle";
+    rdfs:comment "Vehicles with high mobility capabilities on wheels.".
+
+:MediumMobilityWheeledVehicle a :VehicleBin;
+    rdfs:label "Medium Mobility Wheeled Vehicle";
+    rdfs:comment "Vehicles with medium mobility capabilities on wheels.".
+
+:LowMobilityWheeledVehicle a :VehicleBin;
+    rdfs:label "Low Mobility Wheeled Vehicle";
+    rdfs:comment "Vehicles with low mobility capabilities on wheels.".
+
+:TrackedACV a :VehicleBin;
+    rdfs:label "Tracked Amphibious Combat Vehicle";
+    rdfs:comment "Amphibious combat vehicles that are tracked.".
+
+:WheeledACV a :VehicleBin;
+    rdfs:label "Wheeled Amphibious Combat Vehicle";
+    rdfs:comment "Amphibious combat vehicles that are wheeled.".
+
+:LightATV a :VehicleBin;
+    rdfs:label "Light All Terrain Vehicle";
+    rdfs:comment "Light vehicles designed for various terrains.".
+
+# Representative Vehicles
+:M1A1 a :TrackedVehicle;
+    rdfs:label "M1A1 Tank";
+    :hasCombatWeight 55150;
+    :hasMaxRoadSpeed 72;
+    :hasPowerToWeightRatio 27.0;
+    :hasBin :HighMobilityTrackedVehicle.
+
+:M2A2 a :TrackedVehicle;
+    rdfs:label "M2A2 Bradley";
+    :hasCombatWeight 30000;
+    :hasMaxRoadSpeed 66;
+    :hasPowerToWeightRatio 18.1;
+    :hasBin :MediumMobilityTrackedVehicle.
+
+:M60AVLB a :TrackedVehicle;
+    rdfs:label "M60AVLB";
+    :hasCombatWeight 52617;
+    :hasMaxRoadSpeed 48;
+    :hasPowerToWeightRatio 14.2;
+    :hasBin :LowMobilityTrackedVehicle.
+
+:M1084MTV a :WheeledVehicle;
+    rdfs:label "M1084 MTV";
+    :hasCombatWeight 15078;
+    :hasMaxRoadSpeed 94;
+    :hasPowerToWeightRatio 17.45;
+    :hasBin :HighMobilityWheeledVehicle.
+
+:M923 a :WheeledVehicle;
+    rdfs:label "M923 Truck";
+    :hasCombatWeight 14030;
+    :hasMaxRoadSpeed 84;
+    :hasPowerToWeightRatio 15.52;
+    :hasBin :MediumMobilityWheeledVehicle.
+
+:M911 a :WheeledVehicle;
+    rdfs:label "M911 HET";
+    :hasCombatWeight 102514;
+    :hasMaxRoadSpeed 72;
+    :hasPowerToWeightRatio 4.0;
+    :hasBin :LowMobilityWheeledVehicle.
+
+:M113A2 a :AmphibiousCombatVehicle;
+    rdfs:label "M113A2 APC";
+    :hasCombatWeight 11253;
+    :hasMaxRoadSpeed 61;
+    :hasPowerToWeightRatio 24.2;
+    :hasBin :TrackedACV.
+
+:LAV25 a :WheeledACV;
+    rdfs:label "LAV-25";
+    :hasCombatWeight 13400;
+    :hasMaxRoadSpeed 100;
+    :hasPowerToWeightRatio 22.6;
+    :hasBin :WheeledACV.
+
+:KawasakiATV a :LightATV;
+    rdfs:label "Kawasaki ATV";
+    :hasCombatWeight 250;
+    :hasMaxRoadSpeed 40;
+    :hasPowerToWeightRatio 10.0;
+    :hasBin :LightATV.
+
