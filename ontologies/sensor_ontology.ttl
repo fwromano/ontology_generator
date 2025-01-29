@@ -1,0 +1,28 @@
+@prefix sensor: <http://example.org/sensor#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########## Classes ##########
+sensor:Sensor a owl:Class ;
+    rdfs:label "Sensor" .
+
+sensor:CameraSensor a owl:Class ;
+    rdfs:subClassOf sensor:Sensor ;
+    rdfs:label "CameraSensor" .
+
+sensor:LidarSensor a owl:Class ;
+    rdfs:subClassOf sensor:Sensor ;
+    rdfs:label "LidarSensor" .
+
+########## Data Properties ##########
+sensor:hasRange a owl:DatatypeProperty ;
+    rdfs:domain sensor:Sensor ;
+    rdfs:range xsd:integer ;
+    rdfs:label "hasRange" .
+
+########## Individuals ##########
+sensor:Camera1 a sensor:CameraSensor ;
+    rdfs:label "Camera1" ;
+    sensor:hasRange 100 .

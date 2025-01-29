@@ -1,0 +1,135 @@
+
+@prefix : <http://example.org/mydomain#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+:Aircraft a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasComponent ;
+        owl:someValuesFrom :IntelligentFlightBattery
+    ], [
+        a owl:Restriction ;
+        owl:onProperty :hasComponent ;
+        owl:someValuesFrom :Propeller
+    ], [
+        a owl:Restriction ;
+        owl:onProperty :hasComponent ;
+        owl:someValuesFrom :Gimbal
+    ] .
+
+:RemoteController a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :connectsTo ;
+        owl:someValuesFrom :Aircraft
+    ] .
+
+:IntelligentFlightBattery a owl:Class .
+
+:Propeller a owl:Class .
+
+:Gimbal a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :stabilizes ;
+        owl:someValuesFrom :Camera
+    ] .
+
+:Camera a owl:Class .
+
+:VisionSystem a owl:Class ;
+    rdfs:subClassOf :SensingSystem ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :hasDirection ;
+        owl:someValuesFrom :Direction
+    ] .
+
+:InfraredSensingSystem a owl:Class ;
+    rdfs:subClassOf :SensingSystem .
+
+:FlightMode a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :usedIn ;
+        owl:someValuesFrom :Aircraft
+    ] .
+
+:NormalMode a owl:Class ;
+    rdfs:subClassOf :FlightMode .
+
+:SportMode a owl:Class ;
+    rdfs:subClassOf :FlightMode .
+
+:CineMode a owl:Class ;
+    rdfs:subClassOf :FlightMode .
+
+:GNSS a owl:Class .
+
+:App a owl:Class ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty :controls ;
+        owl:someValuesFrom :Aircraft
+    ] .
+
+:DJIFly a owl:Class ;
+    rdfs:subClassOf :App .
+
+:DJIAssistant2 a owl:Class ;
+    rdfs:subClassOf :App .
+
+:hasComponent a owl:ObjectProperty ;
+    rdfs:domain :Aircraft ;
+    rdfs:range owl:Thing .
+
+:connectsTo a owl:ObjectProperty ;
+    rdfs:domain :RemoteController ;
+    rdfs:range :Aircraft .
+
+:stabilizes a owl:ObjectProperty ;
+    rdfs:domain :Gimbal ;
+    rdfs:range :Camera .
+
+:hasDirection a owl:ObjectProperty ;
+    rdfs:domain :VisionSystem ;
+    rdfs:range :Direction .
+
+:usedIn a owl:ObjectProperty ;
+    rdfs:domain :FlightMode ;
+    rdfs:range :Aircraft .
+
+:controls a owl:ObjectProperty ;
+    rdfs:domain :App ;
+    rdfs:range :Aircraft .
+
+:Direction a owl:Class ;
+    owl:equivalentClass [
+        owl:oneOf (
+            :Forward
+            :Backward
+            :Upward
+            :Downward
+        )
+    ] .
+
+:DJIAir2S a :Aircraft ;
+    :hasComponent :Battery_1, :Propeller_A, :Propeller_B, :MainGimbal, :VisionSystem_Set, :InfraredSensor_1 .
+
+:RC_1 a :RemoteController ;
+    :connectsTo :DJIAir2S .
+
+:Battery_1 a :IntelligentFlightBattery .
+
+:MainGimbal a :Gimbal ;
+    :stabilizes :MainCamera .
+
+:VisionSystem_Set a :VisionSystem ;
+    :hasDirection :Forward, :Backward, :Upward, :Downward .
+
+:InfraredSensor_1 a :InfraredSensingSystem .
+
+:NormalModeInstance a :NormalMode ;
+    :usedIn :DJIAir2S .

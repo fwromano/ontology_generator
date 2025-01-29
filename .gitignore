@@ -1,0 +1,100 @@
+# ============================
+# 1. Git Metadata
+# ============================
+
+# The .git directory is automatically ignored by Git.
+# No need to explicitly add it to .gitignore.
+
+# ============================
+# 2. IDE and Editor Settings
+# ============================
+
+# Visual Studio Code settings
+.vscode/
+
+# ============================
+# 3. Operating System Files
+# ============================
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+
+# macOS system files
+.DS_Store
+
+# ============================
+# 4. Python Specific
+# ============================
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+
+# Virtual environment directories
+venv/
+env/
+
+# Environment variable files
+.env
+
+# ============================
+# 5. Build and Generated Files
+# ============================
+
+# Any build directories (modify if you have specific build folders)
+# Example:
+# /build/
+# /dist/
+
+# ============================
+# 6. Logs and Temporary Files
+# ============================
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# ============================
+# 7. Data and Generated Ontologies
+# ============================
+
+# If 'data/images' contains generated images that can be recreated,
+# you might want to ignore them. Otherwise, keep them tracked.
+# Example:
+# data/images/
+
+# Similarly, if 'ontologies/graphs' contains generated graph files:
+# ontologies/graphs/
+
+# Uncomment the following lines if applicable:
+# data/images/
+# ontologies/graphs/
+
+# ============================
+# 8. Scripts Specific
+# ============================
+
+# Ignore the __pycache__ directory within scripts
+scripts/__pycache__/
+
+# If 'scripts/.env' contains sensitive information, ensure it's ignored
+scripts/.env
+
+# ============================
+# 9. Other Files to Ignore
+# ============================
+
+# Filelist generated for assistance
+filelist.txt
+
+# ============================
+# 10. Custom Additions
+# ============================
+
+# Add any other files or directories you want to ignore below
+

@@ -1,0 +1,214 @@
+
+@prefix ex: <http://example.org/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Organization a owl:Class ;
+    rdfs:label "Organization" .
+
+ex:ResearchCenter a owl:Class ;
+    rdfs:subClassOf ex:Organization ;
+    rdfs:label "Research Center" .
+
+ex:Laboratory a owl:Class ;
+    rdfs:subClassOf ex:Organization ;
+    rdfs:label "Laboratory" .
+
+ex:Person a owl:Class ;
+    rdfs:label "Person" .
+
+ex:Report a owl:Class ;
+    rdfs:label "Report" .
+
+ex:VehicleBin a owl:Class ;
+    rdfs:label "Vehicle Bin" .
+
+ex:Vehicle a owl:Class ;
+    rdfs:label "Vehicle" .
+
+ex:Model a owl:Class ;
+    rdfs:label "Model" .
+
+ex:Analysis a owl:Class ;
+    rdfs:label "Analysis" .
+
+ex:authored_by a owl:ObjectProperty ;
+    rdfs:domain ex:Report ;
+    rdfs:range ex:Person .
+
+ex:has_representative_vehicle a owl:ObjectProperty ;
+    rdfs:domain ex:VehicleBin ;
+    rdfs:range ex:Vehicle .
+
+ex:uses_methodology a owl:ObjectProperty ;
+    rdfs:domain ex:Report ;
+    rdfs:range ex:Model .
+
+ex:includes_analysis a owl:ObjectProperty ;
+    rdfs:domain ex:Report ;
+    rdfs:range ex:Analysis .
+
+ex:sponsored_by a owl:ObjectProperty ;
+    rdfs:domain ex:ResearchCenter ;
+    rdfs:range ex:Organization .
+
+ex:classified_into a owl:ObjectProperty ;
+    rdfs:domain ex:Vehicle ;
+    rdfs:range ex:VehicleBin .
+
+ex:tested_in a owl:ObjectProperty ;
+    rdfs:domain ex:Vehicle ;
+    rdfs:range ex:Location .
+
+ex:part_of a owl:ObjectProperty ;
+    rdfs:domain ex:Parameter ;
+    rdfs:range ex:Analysis .
+
+ex:example_of a owl:ObjectProperty ;
+    rdfs:domain ex:Vehicle ;
+    rdfs:range ex:VehicleType .
+
+ex:US_Army_Corps_of_Engineers a ex:Organization ;
+    rdfs:label "US Army Corps of Engineers" ;
+    rdfs:comment "Organization responsible for engineering projects and research, including vehicle categorization standards." .
+
+ex:ERDC a ex:ResearchCenter ;
+    rdfs:label "Engineer Research and Development Center (ERDC)" ;
+    rdfs:comment "Research center under the US Army Corps of Engineers that conducted the study on vehicle categorization." ;
+    ex:sponsored_by ex:Office_of_Assistant_Secretary_of_the_Army, ex:Army_Models_and_Simulations_Office .
+
+ex:GSL a ex:Laboratory ;
+    rdfs:label "Geotechnical and Structures Laboratory (GSL)" ;
+    rdfs:comment "Laboratory within ERDC overseeing the study." .
+
+ex:Alex_Baylot a ex:Person ;
+    rdfs:label "E. Alex Baylot" ;
+    rdfs:comment "Co-author of the report and contributor to the vehicle binning procedure." .
+
+ex:Burhman_Gates a ex:Person ;
+    rdfs:label "Burhman Q. Gates" ;
+    rdfs:comment "Co-author of the report and contributor to the vehicle binning procedure." .
+
+ex:ERDC_GSLTR-02-21 a ex:Report ;
+    rdfs:label "ERDC/GSLTR-02-21" ;
+    rdfs:comment "Report detailing the procedure for categorizing ground vehicles into mobility bins." ;
+    ex:authored_by ex:Alex_Baylot, ex:Burhman_Gates ;
+    ex:uses_methodology ex:NRMM ;
+    ex:includes_analysis ex:Sensitivity_Analysis .
+
+ex:Vehicle_Bin_1 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 1 (High Mobility Tracked Vehicle)" ;
+    rdfs:comment "Bin for tracked vehicles with high off-road mobility, represented by the M1A1." ;
+    ex:has_representative_vehicle ex:M1A1 .
+
+ex:Vehicle_Bin_2 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 2 (Medium Mobility Tracked Vehicle)" ;
+    rdfs:comment "Bin for tracked vehicles with moderate off-road mobility, represented by the M270 MLRS." ;
+    ex:has_representative_vehicle ex:M270_MLRS .
+
+ex:Vehicle_Bin_3 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 3 (Low Mobility Tracked Vehicle)" ;
+    rdfs:comment "Bin for tracked vehicles with limited off-road mobility, represented by the M60AVLB." ;
+    ex:has_representative_vehicle ex:M60AVLB .
+
+ex:Vehicle_Bin_4 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 4 (High Mobility Wheeled Vehicle)" ;
+    rdfs:comment "Bin for wheeled vehicles with high on-road mobility, represented by the M1084 MTV." ;
+    ex:has_representative_vehicle ex:M1084_MTV .
+
+ex:Vehicle_Bin_5 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 5 (Medium Mobility Wheeled Vehicle)" ;
+    rdfs:comment "Bin for wheeled vehicles with moderate on-road mobility, represented by the M985 HEMTT." ;
+    ex:has_representative_vehicle ex:M985_HEMTT .
+
+ex:Vehicle_Bin_6 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 6 (Low Mobility Wheeled Vehicle)" ;
+    rdfs:comment "Bin for wheeled vehicles with limited on-road mobility, represented by the M917 Dump Truck." ;
+    ex:has_representative_vehicle ex:M917_Dump_Truck .
+
+ex:Vehicle_Bin_7 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 7 (High Mobility Wheeled Vehicle with Towed Trailer)" ;
+    rdfs:comment "Bin for high-mobility wheeled vehicles towing trailers, represented by the M1084/M1094." ;
+    ex:has_representative_vehicle ex:M1084_M1094 .
+
+ex:Vehicle_Bin_8 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 8 (Medium Mobility Wheeled Vehicle with Towed Trailer)" ;
+    rdfs:comment "Bin for medium-mobility wheeled vehicles towing trailers, represented by the M985/M989." ;
+    ex:has_representative_vehicle ex:M985_M989 .
+
+ex:Vehicle_Bin_9 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 9 (Low Mobility Wheeled Vehicle with Towed Trailer)" ;
+    rdfs:comment "Bin for low-mobility wheeled vehicles towing trailers, represented by the M911/M747HET." ;
+    ex:has_representative_vehicle ex:M911_M747HET .
+
+ex:Vehicle_Bin_10 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 10 (Tracked Amphibious Combat Vehicle)" ;
+    rdfs:comment "Bin for tracked amphibious combat vehicles, represented by the M113A2." ;
+    ex:has_representative_vehicle ex:M113A2 .
+
+ex:Vehicle_Bin_11 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 11 (Wheeled Amphibious Combat Vehicle)" ;
+    rdfs:comment "Bin for wheeled amphibious combat vehicles, represented by the LAV25." ;
+    ex:has_representative_vehicle ex:LAV25 .
+
+ex:Vehicle_Bin_12 a ex:VehicleBin ;
+    rdfs:label "Vehicle Bin 12 (Light ATV)" ;
+    rdfs:comment "Bin for sub-500 kg all-terrain vehicles, represented by the Kawasaki ATV." ;
+    ex:has_representative_vehicle ex:Kawasaki_ATV .
+
+ex:NRMM a ex:Model ;
+    rdfs:label "NATO Reference Mobility Model (NRMM)" ;
+    rdfs:comment "Model used to predict vehicle speeds for cross-country and on-road conditions, critical for bin categorization." .
+
+ex:Sensitivity_Analysis a ex:Analysis ;
+    rdfs:label "Sensitivity Analysis (Table 1)" ;
+    rdfs:comment "Analysis evaluating how changes in vehicle attributes affect bin membership." .
+
+ex:M1A1 a ex:Vehicle ;
+    rdfs:label "M1A1" ;
+    rdfs:comment "High mobility tracked vehicle used as a representative in simulations (e.g., WARSIM)." ;
+    ex:classified_into ex:Vehicle_Bin_1 .
+
+ex:M113A2 a ex:Vehicle ;
+    rdfs:label "M113A2" ;
+    rdfs:comment "Medium mobility tracked vehicle used in mobility bundle comparisons." ;
+    ex:classified_into ex:Vehicle_Bin_10 .
+
+ex:D7_Dozer a ex:Vehicle ;
+    rdfs:label "D7 Dozer" ;
+    rdfs:comment "Low mobility tracked vehicle with limited speed, later recommended for reclassification." ;
+    ex:classified_into ex:Vehicle_Bin_3 .
+
+ex:M1025A2 a ex:Vehicle ;
+    rdfs:label "M1025A2" ;
+    rdfs:comment "High mobility wheeled vehicle used in SRF speed computation comparisons." ;
+    ex:classified_into ex:Vehicle_Bin_4 .
+
+ex:M923 a ex:Vehicle ;
+    rdfs:label "M923" ;
+    rdfs:comment "Medium mobility wheeled vehicle tested across multiple terrains." ;
+    ex:classified_into ex:Vehicle_Bin_5 .
+
+ex:LAV25 a ex:Vehicle ;
+    rdfs:label "LAV25" ;
+    ex:classified_into ex:Vehicle_Bin_11 .
+
+ex:Amphibious_Vehicles a owl:Class ;
+    rdfs:label "Amphibious Vehicles" ;
+    rdfs:comment "Vehicles capable of operating on land and water (e.g., BTR70, LAV25)." .
+
+ex:BTR70 a ex:Vehicle ;
+    rdfs:label "BTR70" ;
+    ex:example_of ex:Amphibious_Vehicles .
+
+ex:HEMTT a ex:Vehicle ;
+    rdfs:label "HEMTT" ;
+    ex:classified_into ex:Vehicle_Bin_5 .
+
+ex:Office_of_Assistant_Secretary_of_the_Army a ex:Organization ;
+    rdfs:label "Office of Assistant Secretary of the Army for Acquisition, Logistics, and Technology" .
+
+ex:Army_Models_and_Simulations_Office a ex:Organization ;
+    rdfs:label "Army Models and Simulations Office" .
