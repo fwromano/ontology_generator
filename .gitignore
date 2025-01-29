@@ -42,10 +42,7 @@ env/
 # 5. Build and Generated Files
 # ============================
 
-# Any build directories (modify if you have specific build folders)
-# Example:
-# /build/
-# /dist/
+# Any build directories 
 
 # ============================
 # 6. Logs and Temporary Files
@@ -63,17 +60,9 @@ env/
 # 7. Data and Generated Ontologies
 # ============================
 
-# If 'data/images' contains generated images that can be recreated,
-# you might want to ignore them. Otherwise, keep them tracked.
-# Example:
-# data/images/
-
-# Similarly, if 'ontologies/graphs' contains generated graph files:
-# ontologies/graphs/
-
-# Uncomment the following lines if applicable:
-# data/images/
-# ontologies/graphs/
+data/images/
+data/partial_ontologies/
+ontologies/
 
 # ============================
 # 8. Scripts Specific
@@ -85,16 +74,5 @@ scripts/__pycache__/
 # If 'scripts/.env' contains sensitive information, ensure it's ignored
 scripts/.env
 
-# ============================
-# 9. Other Files to Ignore
-# ============================
 
-# Filelist generated for assistance
-filelist.txt
-
-# ============================
-# 10. Custom Additions
-# ============================
-
-# Add any other files or directories you want to ignore below
 

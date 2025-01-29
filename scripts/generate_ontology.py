@@ -86,7 +86,7 @@ def extract_partial_json(chunk: str) -> Dict:
     # having issue with this line. 
     #   prompt issue? 
     response = client.chat.completions.create(
-        model="deepseek-reasoner",
+        model="gpt-4o-mini-2024-07-18",
         messages=[
             {"role": "system", "content": "You are an expert in domain knowledge extraction."},
             {"role": "user", "content": prompt},
@@ -94,7 +94,6 @@ def extract_partial_json(chunk: str) -> Dict:
         stream=False
     )
     print(response)
-    print(response.status_code)
 
     raw_json_str = response.choices[0].message.content.strip()
 
@@ -254,7 +253,7 @@ def combine_json_into_ttl(merged_data: Dict) -> str:
     """
 
     response = client.chat.completions.create(
-        model="deepseek-reasoner",
+        model="gpt-4o-mini-2024-07-18",
         messages=[
             {"role": "system", "content": "You are an ontology expert familiar with JSON -> Turtle conversions."},
             {"role": "user", "content": prompt},
