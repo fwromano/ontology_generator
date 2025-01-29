@@ -8,11 +8,10 @@ from validation import clean_and_validate_ttl
 load_dotenv()
 
 #########################################
-#  Setup your LLM (DeepSeek or OpenAI)
+#  Setup your LLM API client
 #########################################
 client = OpenAI(
-    api_key=os.getenv("DEEPSEEK_API_KEY"), 
-    base_url="https://api.deepseek.com"
+    api_key=os.getenv("OPENAI_API_KEY")
 )
 
 
