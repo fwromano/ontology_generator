@@ -86,7 +86,7 @@ def extract_partial_json(chunk: str) -> Dict:
     # having issue with this line. 
     #   prompt issue? 
     response = client.chat.completions.create(
-        model="gpt-4o-mini-2024-07-18",
+        model="o3-mini-2025-01-31",
         messages=[
             {"role": "system", "content": "You are an expert in domain knowledge extraction."},
             {"role": "user", "content": prompt},
@@ -305,7 +305,7 @@ def onepassllm(document_text):
     # having issue with this line. 
     #   prompt issue? 
     response = client.chat.completions.create(
-        model="gpt-4o-mini-2024-07-18",
+        model="o3-mini-2025-01-31",
         messages=[
             {"role": "system", "content": "You are an expert in domain knowledge extraction."},
             {"role": "user", "content": prompt},
