@@ -1,0 +1,319 @@
+@prefix :            <http://example.org/vehicle#> .
+@prefix owl:         <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:         <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:        <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:         <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+#################################################################
+# Ontology Header
+#################################################################
+
+:vehicleOntology a owl:Ontology ;
+    rdfs:label "Ground Vehicle Categorization Ontology" ;
+    rdfs:comment "An ontology capturing classes, properties, bins, and representative vehicles used to categorize ground vehicles by mobility characteristics (tracked, wheeled, vehicles with trailers, ACVs, ATVs)." .
+
+#################################################################
+# Classes
+#################################################################
+
+# Vehicle classes
+:GroundVehicle a owl:Class ;
+    rdfs:label "Ground Vehicle" ;
+    rdfs:comment "A vehicle that operates on the ground." .
+
+:TrackedVehicle a owl:Class ;
+    rdfs:subClassOf :GroundVehicle ;
+    rdfs:label "Tracked Vehicle" ;
+    rdfs:comment "A ground vehicle that moves on continuous tracks." .
+
+:WheeledVehicle a owl:Class ;
+    rdfs:subClassOf :GroundVehicle ;
+    rdfs:label "Wheeled Vehicle" ;
+    rdfs:comment "A ground vehicle that moves on wheels." .
+
+:VehicleWithTrailer a owl:Class ;
+    rdfs:subClassOf :WheeledVehicle ;
+    rdfs:label "Wheeled Vehicle with Trailer" ;
+    rdfs:comment "A wheeled vehicle that is towing a trailer." .
+
+:LightATV a owl:Class ;
+    rdfs:subClassOf :GroundVehicle ;
+    rdfs:label "Light ATV" ;
+    rdfs:comment "A small all-terrain vehicle (usually less than 500 kg)." .
+
+:AmphibiousCombatVehicle a owl:Class ;
+    rdfs:subClassOf :GroundVehicle ;
+    rdfs:label "Amphibious Combat Vehicle" ;
+    rdfs:comment "A combat vehicle capable of both land and water operations." .
+
+:TrackedACV a owl:Class ;
+    rdfs:subClassOf (:AmphibiousCombatVehicle, :TrackedVehicle) ;
+    rdfs:label "Tracked Amphibious Combat Vehicle" ;
+    rdfs:comment "A tracked combat vehicle designed for amphibious operations." .
+
+:WheeledACV a owl:Class ;
+    rdfs:subClassOf (:AmphibiousCombatVehicle, :WheeledVehicle) ;
+    rdfs:label "Wheeled Amphibious Combat Vehicle" ;
+    rdfs:comment "A wheeled combat vehicle designed for amphibious operations." .
+
+# Bin as a classification concept
+:Bin a owl:Class ;
+    rdfs:label "Mobility Bin" ;
+    rdfs:comment "A category that groups vehicles by their mobility characteristics." .
+
+# Specific Bin subclasses (each corresponding to one of the 12 bins)
+:HighMobilityTrackedBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "High Mobility Tracked Bin" .
+
+:MediumMobilityTrackedBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Medium Mobility Tracked Bin" .
+
+:LowMobilityTrackedBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Low Mobility Tracked Bin" .
+
+:HighMobilityWheeledBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "High Mobility Wheeled Bin" .
+
+:MediumMobilityWheeledBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Medium Mobility Wheeled Bin" .
+
+:LowMobilityWheeledBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Low Mobility Wheeled Bin" .
+
+:HighMobilityTrailerBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "High Mobility Trailer Bin" ;
+    rdfs:comment "For wheeled vehicles towing trailers that are high mobility." .
+
+:MediumMobilityTrailerBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Medium Mobility Trailer Bin" ;
+    rdfs:comment "For wheeled vehicles towing trailers that are medium mobility." .
+
+:LowMobilityTrailerBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Low Mobility Trailer Bin" ;
+    rdfs:comment "For wheeled vehicles towing trailers that are low mobility." .
+
+:TrackedACVBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Tracked ACV Bin" .
+
+:WheeledACVBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Wheeled ACV Bin" .
+
+:LightATVBin a owl:Class ;
+    rdfs:subClassOf :Bin ;
+    rdfs:label "Light ATV Bin" .
+
+#################################################################
+# Object Properties
+#################################################################
+
+:belongsToBin a owl:ObjectProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range :Bin ;
+    rdfs:label "belongs to bin" ;
+    rdfs:comment "Relates a ground vehicle to its mobility bin." .
+
+:hasRepresentativeVehicle a owl:ObjectProperty ;
+    rdfs:domain :Bin ;
+    rdfs:range :GroundVehicle ;
+    rdfs:label "has representative vehicle" ;
+    rdfs:comment "Links a bin to the vehicle chosen to represent that mobility category." .
+
+#################################################################
+# Data Properties
+#################################################################
+
+:combatWeight a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "combat weight" ;
+    rdfs:comment "The combat (or loaded) weight of a vehicle (in kilograms)." .
+
+:power a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "power" ;
+    rdfs:comment "Engine power of the vehicle (in horsepower)." .
+
+:maxRoadSpeed a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "maximum road speed" ;
+    rdfs:comment "The maximum speed of the vehicle on road (in kilometers per hour)." .
+
+:powerToWeightRatio a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "power-to-weight ratio" ;
+    rdfs:comment "The ratio of power (hp) to vehicle weight (typically in hp/ton)." .
+
+:maxGradient a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "maximum gradient" ;
+    rdfs:comment "The maximum road gradient (%) the vehicle can negotiate." .
+
+:fordingDepth a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "fording depth" ;
+    rdfs:comment "The maximum fording depth (in meters) for water crossing." .
+
+:groundContactPressure a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "ground contact pressure" ;
+    rdfs:comment "The pressure exerted on the ground (kg/cm²) by the vehicle." .
+
+:verticalObstacle a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "vertical obstacle" ;
+    rdfs:comment "The maximum vertical obstacle height (in meters) the vehicle can overcome." .
+
+:primaryUseCode a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:integer ;
+    rdfs:label "primary use code" ;
+    rdfs:comment "A code signifying the vehicle’s primary use (e.g., 1: Truck, 2: ACV, 3: Heavy Equipment Transporter)." .
+
+:mfgTypeCode a owl:DatatypeProperty ;
+    rdfs:domain :GroundVehicle ;
+    rdfs:range xsd:integer ;
+    rdfs:label "manufacturing type code" ;
+    rdfs:comment "A code identifying the manufacturing type (e.g., 1: USA/UK/Germany; 2: Former Warsaw Pact, Iraq, China, North Korea)." .
+
+#################################################################
+# Individuals (Bins and Representative Vehicles)
+#################################################################
+
+# Bin individuals
+:Bin1 a :HighMobilityTrackedBin ;
+    rdfs:label "Bin 1: High Mobility Tracked Vehicle" .
+
+:Bin2 a :MediumMobilityTrackedBin ;
+    rdfs:label "Bin 2: Medium Mobility Tracked Vehicle" .
+
+:Bin3 a :LowMobilityTrackedBin ;
+    rdfs:label "Bin 3: Low Mobility Tracked Vehicle" .
+
+:Bin4 a :HighMobilityWheeledBin ;
+    rdfs:label "Bin 4: High Mobility Wheeled Vehicle" .
+
+:Bin5 a :MediumMobilityWheeledBin ;
+    rdfs:label "Bin 5: Medium Mobility Wheeled Vehicle" .
+
+:Bin6 a :LowMobilityWheeledBin ;
+    rdfs:label "Bin 6: Low Mobility Wheeled Vehicle" .
+
+:Bin7 a :HighMobilityTrailerBin ;
+    rdfs:label "Bin 7: High Mobility Wheeled Vehicle with Towed Trailer" .
+
+:Bin8 a :MediumMobilityTrailerBin ;
+    rdfs:label "Bin 8: Medium Mobility Wheeled Vehicle with Towed Trailer" .
+
+:Bin9 a :LowMobilityTrailerBin ;
+    rdfs:label "Bin 9: Low Mobility Wheeled Vehicle with Towed Trailer" .
+
+:Bin10 a :TrackedACVBin ;
+    rdfs:label "Bin 10: Tracked ACV" .
+
+:Bin11 a :WheeledACVBin ;
+    rdfs:label "Bin 11: Wheeled ACV" .
+
+:Bin12 a :LightATVBin ;
+    rdfs:label "Bin 12: Light ATV" .
+
+# Representative Vehicle individuals
+:M1A1 a :TrackedVehicle ;
+    rdfs:label "M1A1" ;
+    :combatWeight "55150"^^xsd:decimal ;
+    :power "1641"^^xsd:decimal ;
+    :maxRoadSpeed "72"^^xsd:decimal ;
+    :powerToWeightRatio "27.0"^^xsd:decimal ;
+    :belongsToBin :Bin1 .
+
+:M270MLRS a :TrackedVehicle ;
+    rdfs:label "M270 MLRS" ;
+    :combatWeight "25191"^^xsd:decimal ;
+    :maxRoadSpeed "64"^^xsd:decimal ;
+    :power "500"^^xsd:decimal ;
+    :belongsToBin :Bin2 .
+
+:M60AVLB a :TrackedVehicle ;
+    rdfs:label "M60 AVLB" ;
+    :combatWeight "55205"^^xsd:decimal ;
+    :maxRoadSpeed "48"^^xsd:decimal ;
+    :power "750"^^xsd:decimal ;
+    :belongsToBin :Bin3 .
+
+:M1084MTV a :WheeledVehicle ;
+    rdfs:label "M1084 MTV" ;
+    :combatWeight "15078"^^xsd:decimal ;
+    :maxRoadSpeed "94"^^xsd:decimal ;
+    :power "290"^^xsd:decimal ;
+    :belongsToBin :Bin4 .
+
+:M985HEMTT a :WheeledVehicle ;
+    rdfs:label "M985 HEMTT" ;
+    :combatWeight "28168"^^xsd:decimal ;
+    :maxRoadSpeed "88"^^xsd:decimal ;
+    :power "445"^^xsd:decimal ;
+    :belongsToBin :Bin5 .
+
+:M917DumpTruck a :WheeledVehicle ;
+    rdfs:label "M917 Dump Truck" ;
+    :combatWeight "33070"^^xsd:decimal ;
+    :maxRoadSpeed "107"^^xsd:decimal ;
+    :power "400"^^xsd:decimal ;
+    :belongsToBin :Bin6 .
+
+:M1084_M1094 a :WheeledVehicle ;
+    rdfs:label "M1084/M1094" ;
+    :belongsToBin :Bin7 .
+
+:M985_M989 a :WheeledVehicle ;
+    rdfs:label "M985/M989" ;
+    :belongsToBin :Bin8 .
+
+:M911_M747HET a :WheeledVehicle ;
+    rdfs:label "M911/M747HET" ;
+    :belongsToBin :Bin9 .
+
+:M113A2 a :TrackedACV ;
+    rdfs:label "M113A2" ;
+    :belongsToBin :Bin10 .
+
+:LAV25 a :WheeledACV ;
+    rdfs:label "LAV25" ;
+    :belongsToBin :Bin11 .
+
+:KawasakiATV a :LightATV ;
+    rdfs:label "Kawasaki ATV" ;
+    :combatWeight "500"^^xsd:decimal ;
+    :belongsToBin :Bin12 .
+
+# Optional: link representative vehicles from bins using the object property
+:Bin1 :hasRepresentativeVehicle :M1A1 .
+:Bin2 :hasRepresentativeVehicle :M270MLRS .
+:Bin3 :hasRepresentativeVehicle :M60AVLB .
+:Bin4 :hasRepresentativeVehicle :M1084MTV .
+:Bin5 :hasRepresentativeVehicle :M985HEMTT .
+:Bin6 :hasRepresentativeVehicle :M917DumpTruck .
+:Bin7 :hasRepresentativeVehicle :M1084_M1094 .
+:Bin8 :hasRepresentativeVehicle :M985_M989 .
+:Bin9 :hasRepresentativeVehicle :M911_M747HET .
+:Bin10 :hasRepresentativeVehicle :M113A2 .
+:Bin11 :hasRepresentativeVehicle :LAV25 .
+:Bin12 :hasRepresentativeVehicle :KawasakiATV .
+
